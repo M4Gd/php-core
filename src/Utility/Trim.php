@@ -1,5 +1,5 @@
 <?php
-namespace Averta\Utility;
+namespace Averta\Core\Utility;
 
 class Trim
 {
