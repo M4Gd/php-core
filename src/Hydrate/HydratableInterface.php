@@ -1,5 +1,5 @@
 <?php
-namespace Averta\Hydrate;
+namespace Averta\Core\Hydrate;
 
 interface HydratableInterface extends HydrationInterface, ExtractionInterface
 {
