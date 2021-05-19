@@ -1,5 +1,5 @@
 <?php
-namespace Averta\Controllers;
+namespace Averta\Core\Controllers;
 
 use WPEmerge\Requests\RequestInterface;
 use WPEmerge\View\ViewInterface;
