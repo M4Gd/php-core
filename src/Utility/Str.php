@@ -17,8 +17,8 @@ class Str
 
 		$string = str_replace( $separator, '', ucwords( $input, $separator ) );
 
-		if ( $capitalizeFirstChar ) {
-			$string = ucfirst( $string );
+		if ( ! $capitalizeFirstChar ) {
+			$string = lcfirst( $string );
 		}
 
 		return $string;
