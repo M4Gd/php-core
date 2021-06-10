@@ -22,15 +22,21 @@ class Arr
 	/**
      * camelCase keys of an array
      *
-     * @param array $array
+     * @param array   $array        The array to check
+	 * @param string  $separator    The character that should be removed
+     * @param array   $ignoreKeys   The list of keys to ignore
+	 *
      * @return array
      */
-    public static function camelizeKeys( array $array, string $separator = '_'  ) {
+    public static function camelizeKeys( array $array, string $separator = '_', $ignoreKeys = []  ) {
 
 		$result = [];
 
 		foreach( $array as $key => $value ) {
-			$result[ Str::camelize( $key, $separator ) ] = $value;
+			if( ! in_array( $key, $ignoreKeys ) ){
+				$key = Str::camelize( $key, $separator );
+			}
+			$result[ $key ] = $value;
 		}
 
 		return $result;
