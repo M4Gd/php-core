@@ -26,9 +26,13 @@ class Arr
 	 * @param string  $separator    The character that should be removed
      * @param array   $ignoreKeys   The list of keys to ignore
 	 *
-     * @return array
+     * @return mixed
      */
-    public static function camelizeKeys( array $array, string $separator = '_', $ignoreKeys = []  ) {
+    public static function camelizeKeys( $array, string $separator = '_', $ignoreKeys = []  ) {
+
+		if( ! is_array( $array ) ){
+			return $array;
+		}
 
 		$result = [];
 
