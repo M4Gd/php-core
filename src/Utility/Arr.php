@@ -29,7 +29,7 @@ class Arr
 	 *
      * @return mixed
      */
-    public static function camelizeKeys( $array, string $separator = '_', $ignoreKeys = [], $recursive = false ) {
+    public static function camelizeKeys( $array, $separator = '_', $ignoreKeys = [], $recursive = false ) {
 
     	if( is_object( $array ) ){
     		$array = (array) $array;
@@ -55,5 +55,31 @@ class Arr
 
 		return $result;
 	}
+
+	/**
+	 * Checks whether the variable has true or positive value or not
+	 *
+	 * @param $var
+	 *
+	 * @return bool|string
+	 */
+	public static function isTrue( $var ) {
+        if ( is_bool( $var ) ) {
+            return $var;
+        }
+
+        if ( is_string( $var ) ){
+            $var = strtolower( $var );
+            if( in_array( $var, [ 'yes', 'on', 'true', 'checked' ] ) ){
+                return true;
+            }
+        }
+
+        if ( is_numeric( $var ) ) {
+            return (bool) $var;
+        }
+
+        return false;
+    }
 
 }
