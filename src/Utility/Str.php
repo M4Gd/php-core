@@ -9,11 +9,11 @@ class Str
 	 *
 	 * @param string  $input                     The string to convert
 	 * @param string  $separator                 The character that should be removed
-	 * @param boolean $capitalizeFirstCharacter  Whether to capitalize the first character or not
+	 * @param bool    $capitalizeFirstChar       Whether to capitalize the first character or not
 	 *
 	 * @return string
 	 */
-	public static function camelize( string $input, string $separator = "_", $capitalizeFirstChar = false ) {
+	public static function camelize( $input, $separator = "_", $capitalizeFirstChar = false ) {
 
 		$string = str_replace( $separator, '', ucwords( $input, $separator ) );
 
@@ -61,6 +61,36 @@ class Str
 	 */
 	public static function shortHash( $data, $binary = false ){
 		return hash( 'adler32', $data, $binary );
+	}
+
+	/**
+	 * Extracts and returns a part of string based on provided regex.
+	 *
+	 * @param string $string      String to search in by regex
+	 * @param string $regex       Regular expression for extracting a part of URL
+	 * @param int    $matchIndex  Which part of matched part we are looking for. Set -1 to get all matches.
+	 *
+	 * @return bool|mixed   Returns the matched part on success, and false on failure.
+	 */
+	public static function extractByRegex( $string, $regex, $matchIndex = 1 ){
+
+		$matches = [];
+
+		preg_match(
+			$regex,
+			$string,
+			$matches
+		);
+
+		if( $matchIndex === -1 ){
+			return $matches;
+		}
+
+		if( isset( $matches[ $matchIndex ] ) ){
+			return $matches[ $matchIndex ];
+		}
+
+		return false;
 	}
 
 }
