@@ -8,8 +8,8 @@ class Arr
 	/**
      * Whether keys exist or not
      *
-     * @param array $keys   An array of keys
-     * @param array $array  The array to check
+     * @param array $keys   An array of keys to search for
+     * @param array $array  The array to search in
      *
      * @return bool
      */
@@ -54,6 +54,26 @@ class Arr
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Merges the defined arguments into defaults array.
+	 *
+	 * @param array|object $args     Value to merge with $defaults.
+	 * @param array $defaults        Array that serves as the defaults.
+	 *
+	 * @return array
+	 */
+	public static function merge( $args, $defaults = [] ) {
+		if ( is_object( $args ) ) {
+			$args = get_object_vars( $args );
+		}
+
+		if ( is_array( $defaults ) && $defaults ) {
+			return array_merge( $defaults, $args );
+		}
+
+		return $args;
 	}
 
 }
