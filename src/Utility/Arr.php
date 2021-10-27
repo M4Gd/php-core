@@ -1,6 +1,8 @@
 <?php
 namespace Averta\Core\Utility;
 
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 
 class Arr
 {
@@ -74,6 +76,45 @@ class Arr
 		}
 
 		return $args;
+	}
+
+	/**
+	 *  Applies the callback to the elements of the given arrays recursively
+	 *
+	 * @param array $array
+	 * @param       $callback
+	 */
+	public static function mapDeep( $array, $callback ){
+		if ( ! empty( $array ) ) {
+			foreach ( $array as $index => $value ) {
+				call_user_func( $callback, $value, $index );
+				if ( is_array( $value ) ) {
+					static::mapDeep( $value, $callback );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Searches the array for a given key and returns the first corresponding value if successful
+	 *
+	 * @param $haystack
+	 * @param $needle
+	 *
+	 * @return mixed|null
+	 */
+	public static function searchKeyDeep( $haystack, $needle ){
+		$iterator  = new RecursiveArrayIterator( $haystack );
+		$recursive = new RecursiveIteratorIterator(
+			$iterator,
+			RecursiveIteratorIterator::SELF_FIRST
+		);
+		foreach ( $recursive as $key => $value ) {
+			if ( $key === $needle ) {
+				return $value;
+			}
+		}
+		return null;
 	}
 
 }
