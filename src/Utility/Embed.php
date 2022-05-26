@@ -12,6 +12,9 @@ class Embed
 	 * @return bool|mixed  Returns the YouTube video code on success, and false on failure.
 	 */
 	public static function getYouTubeCode( $videoUrl ){
+        if ( strpos( $videoUrl, 'youtu.be' ) !== false ) {
+            return pathinfo( $videoUrl, PATHINFO_FILENAME );
+        }
 		return Str::extractByRegex( $videoUrl, '/[\\?\\&]v=([^\\?\\&]+)/', 1 );
 	}
 
