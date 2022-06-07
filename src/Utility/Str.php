@@ -93,4 +93,20 @@ class Str
 		return false;
 	}
 
+    /**
+     * Converts semantic version to decimal
+     *
+     * @param string $version
+     *
+     * @return int
+     */
+    public static function versionToDecimal( $version = '0.0.0' ) {
+        $result = '';
+        $versionParts = explode( '.', $version );
+        foreach( $versionParts as $value ) {
+            $result .= substr( "00" . $value, -3 );
+        }
+        return (int) $result;
+    }
+
 }
