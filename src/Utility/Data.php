@@ -206,4 +206,15 @@ class Data
 
         return false;
     }
+
+    /**
+	 * Checks whether the variable is null or empty string
+	 *
+	 * @param $var
+	 *
+	 * @return bool
+	 */
+	public static function isNullOrEmptyStr( $var ) {
+        return is_null( $var ) || $var === '';
+    }
 }
