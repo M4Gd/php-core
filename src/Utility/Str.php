@@ -109,4 +109,55 @@ class Str
         return (int) $result;
     }
 
+    /**
+     * Trims a text by character length
+     *
+     * @param string $text    The text to be trimmed
+     * @param int $maxLength  Number of characters in text.
+     * @param string $more    What to append if $text needs to be trimmed. Default ' …'
+     *
+     * @return string
+     */
+    public static function trimByChars( $text, $maxLength = 1000, $more = " ..." ){
+        $textLength = function_exists('mb_strwidth') ? mb_strwidth( $text ) : strlen( $text );
+
+        if( $textLength > $maxLength && ! empty( $maxLength ) && ! empty( $text ) ){
+            return function_exists( 'mb_strimwidth' ) ? mb_strimwidth( $text, 0, $maxLength, '' ) . $more : substr( $text, 0, $maxLength ) . $more;
+        }
+        return $text;
+    }
+
+    /**
+     * Trims text to a certain number of words.
+     * 
+     * @param string $text     The text to be trimmed
+     * @param int $maxLength   Number of words.
+     * @param string $more     What to append if $text needs to be trimmed. Default ' …'.
+     *
+     * @return mixed|string
+     */
+    public static function trimByWords( $text, $maxLength, $more = " ...") {
+
+        if ( strlen( $text ) > $maxLength && ! empty( $maxLength ) && ! empty( $text ) ) {
+            $words = preg_split('/\s/', $text );
+            $output = '';
+            $i      = 0;
+            while (1) {
+                $length = strlen( $output ) + strlen( $words[$i] );
+                if ( $length > $maxLength ) {
+                    break;
+                }
+                else {
+                    $output .= " " . $words[$i];
+                    ++$i;
+                }
+            }
+            $output .= $more;
+        }
+        else {
+            $output = $text;
+        }
+        return $output;
+    }
+
 }
