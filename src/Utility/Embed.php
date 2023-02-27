@@ -1,9 +1,12 @@
 <?php
 namespace Averta\Core\Utility;
 
-
-class Embed
-{
+/**
+ * Class to generate Embed url
+ *
+ * https://regex101.com/r/6IhI2o/1
+ */
+class Embed{
 
 	/**
 	 * Converts YouTube url to embed url
@@ -88,6 +91,13 @@ class Embed
         return '';
 	}
 
+    /**
+     * Generates matches for a Youtube or Vimeo url
+     *
+     * @param string $videoUrl  Video url
+     *
+     * @return array|bool|mixed
+     */
     public static function getYouTubeVimeoMatches( $videoUrl ){
         return Str::extractByRegex( $videoUrl, '/(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\\&\S+)?/', -1 );
     }
