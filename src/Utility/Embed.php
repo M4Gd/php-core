@@ -4,19 +4,6 @@ namespace Averta\Core\Utility;
 
 class Embed
 {
-	/**
-	 * Extracts and returns YouTube video code from video url
-	 *
-	 * @param string $videoUrl    YouTube url
-	 *
-	 * @return bool|mixed  Returns the YouTube video code on success, and false on failure.
-	 */
-	public static function getYouTubeCode( $videoUrl ){
-        if ( strpos( $videoUrl, 'youtu.be' ) !== false ) {
-            return pathinfo( $videoUrl, PATHINFO_FILENAME );
-        }
-		return Str::extractByRegex( $videoUrl, '/[\\?\\&]v=([^\\?\\&]+)/', 1 );
-	}
 
 	/**
 	 * Converts YouTube url to embed url
@@ -26,22 +13,26 @@ class Embed
 	 * @return bool|mixed  Returns the YouTube embed url on success, and false on failure.
 	 */
 	public static function getYouTubeEmbedUrl( $videoUrl ){
-		if( $code = self::getYouTubeCode( $videoUrl ) ){
+		if( $code = self::getYouTubeVimeoCode( $videoUrl ) ){
 			return 'https://www.youtube.com/embed/' . $code;
 		}
 
 		return $code;
 	}
 
-	/**
-	 * Extracts and returns Vimeo video code from video url
+    /**
+	 * Converts YouTube url to poster image url
 	 *
-	 * @param string $videoUrl    Vimeo url
+	 * @param string $videoUrl    YouTube url
 	 *
-	 * @return bool|mixed  Returns the Vimeo video code on success, and false on failure.
+	 * @return bool|mixed  Returns the YouTube poster image url on success, and false on failure.
 	 */
-	public static function getVimeoCode( $videoUrl ){
-		return Str::extractByRegex( $videoUrl, '/vimeo\.com\/([0-9]{1,10})/', 1 );
+	public static function getYouTubePosterUrl( $videoUrl ){
+		if( $code = self::getYouTubeVimeoCode( $videoUrl ) ){
+			return 'http://img.youtube.com/vi/' . $code. '/maxresdefault.jpg';
+		}
+
+		return $code;
 	}
 
 	/**
@@ -52,10 +43,52 @@ class Embed
 	 * @return bool|mixed  Returns the Vimeo embed url on success, and false on failure.
 	 */
 	public static function getVimeoEmbedUrl( $videoUrl ){
-		if( $code = self::getVimeoCode( $videoUrl ) ){
+		if( $code = self::getYouTubeVimeoCode( $videoUrl ) ){
 			return 'https://player.vimeo.com/video/' . $code;
 		}
 
 		return $code;
 	}
+
+    /**
+	 * Extracts and returns YouTube or Vimeo video ID from video url
+	 *
+	 * @param string $videoUrl    YouTube url
+	 *
+	 * @return bool|mixed  Returns the YouTube or Vimeo video code on success, and false on failure.
+	 */
+	public static function getYouTubeVimeoCode( $videoUrl ){
+		$matches = $matches = static::getYouTubeVimeoMatches( $videoUrl );
+
+        if( is_array( $matches ) ){
+            return end( $matches );
+        }
+        return false;
+	}
+
+    /**
+	 * Converts Youtube or Vimeo video url to embed url
+	 *
+	 * @param string $videoUrl    YouTube or Vimeo video url
+	 *
+	 * @return string  Returns Video embed url on success
+	 */
+	public static function getYouTubeVimeoEmbedUrl( $videoUrl ){
+		$matches = static::getYouTubeVimeoMatches( $videoUrl );
+
+        if( is_array( $matches ) ){
+            if( !empty( $matches[3] ) ){
+                if( in_array( $matches[3], ["youtube.com", "youtu.be"] ) ){
+                    return 'https://www.youtube.com/embed/' . end( $matches );
+                } elseif( $matches[3] === "vimeo.com" ){
+                    return 'https://player.vimeo.com/video/' . end( $matches );
+                }
+            }
+        }
+        return '';
+	}
+
+    public static function getYouTubeVimeoMatches( $videoUrl ){
+        return Str::extractByRegex( $videoUrl, '/(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\\&\S+)?/', -1 );
+    }
 }
