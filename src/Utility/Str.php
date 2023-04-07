@@ -129,35 +129,21 @@ class Str
 
     /**
      * Trims text to a certain number of words.
-     * 
+     *
      * @param string $text     The text to be trimmed
      * @param int $maxLength   Number of words.
      * @param string $more     What to append if $text needs to be trimmed. Default ' …'.
      *
      * @return mixed|string
      */
-    public static function trimByWords( $text, $maxLength, $more = " ...") {
-
-        if ( strlen( $text ) > $maxLength && ! empty( $maxLength ) && ! empty( $text ) ) {
-            $words = preg_split('/\s/', $text );
-            $output = '';
-            $i      = 0;
-            while (1) {
-                $length = strlen( $output ) + strlen( $words[$i] );
-                if ( $length > $maxLength ) {
-                    break;
-                }
-                else {
-                    $output .= " " . $words[$i];
-                    ++$i;
-                }
-            }
-            $output .= $more;
-        }
-        else {
-            $output = $text;
-        }
-        return $output;
+    public static function trimByWords( $text, $maxLength, $more = " ..." ) {
+        $words = preg_split('/\s+/u', $text, $maxLength + 1);
+        if( count( $words ) > $maxLength ) {
+		    array_pop($words);
+		    $text = implode(' ', $words);
+		    $text .= $more;
+		}
+	    return $text;
     }
 
 }
