@@ -102,6 +102,8 @@ class Data
                 $value = json_decode($value, true);
             } elseif (is_string($value) && is_serialized($value)) {
                 $value = unserialize($value);
+            } elseif (is_object($value) && !is_array($value)) {
+                $value = json_decode( json_encode( $value ), true ); // convert to array recursively
             } elseif(!is_string($value)) {
                 $value = (array) $value;
             }
