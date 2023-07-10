@@ -49,6 +49,47 @@ class URL
 		return false;
 	}
 
+    /**
+     * Check if URL is a stage domain or not
+     *
+     * @param string $url
+     *
+     * @return boolean
+     */
+    public static function isStage( $url ): bool {
+        $stageTLDs = [
+            'staging',
+            'stg.wpengine.com',
+            'dev.wpengine.com',
+            'myftpupload.com',
+            'cloudwaysapps.com',
+            'ngrok.io',
+            '-dev.ksysweb.com',
+            '-stg.ksysweb.com'
+        ];
+
+        foreach ( $stageTLDs as $stageTLD ) {
+            if ( strpos( $stageTLD, $url ) ) {
+                return true;
+            }
+        }
+
+        $patterns = [
+            '/stage-([^.]*)\.([^.]*)\.([^.]*)/',
+            '/dev-([^.]*)\.([^.]*)\.([^.]*)/',
+            '/test-([^.]*)\.([^.]*)\.([^.]*)/'
+        ];
+
+        foreach ( $patterns as $pattern ) {
+            preg_match_all( $pattern, $url, $matches, PREG_SET_ORDER );
+            if ( !empty( $matches ) ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 	/**
 	 * Get (sub)domain from URL
 	 *
@@ -70,7 +111,7 @@ class URL
 	public static function getDomain( $url ) {
         $parseData = parse_url( $url );
         $domain = preg_replace('/^www\./', '', $parseData['host'] );
-    
+
         $parts = explode(".", $domain);
 
         return ( array_key_exists(count( $parts ) - 2, $parts ) ? $parts [count( $parts ) - 2 ] : "") . "." . $parts[ count( $parts ) - 1 ];
