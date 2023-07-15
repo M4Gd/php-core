@@ -69,7 +69,7 @@ class URL
         ];
 
         foreach ( $stageTLDs as $stageTLD ) {
-            if ( strpos( $stageTLD, $url ) ) {
+            if ( strpos( $url, $stageTLD ) ) {
                 return true;
             }
         }
