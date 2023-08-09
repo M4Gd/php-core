@@ -34,20 +34,29 @@ class URL
      * @return bool
      */
 	public static function isLocal( $url ){
-		$localPatterns = [
-			'localhost',
-			'.local',
-			'192.168.0',
-			'127.0.0.1'
-		];
 
-		foreach ( $localPatterns as $pattern ) {
-			if ( strpos( $url, $pattern ) || strpos( $url, $pattern ) === 0 ) {
-				return true;
-			}
-		}
-		return false;
-	}
+        if ( false === strpos( $url, '.' ) ) {
+            return true;
+        }
+
+        $localPatterns = [
+            'localhost',
+            '.local',
+            'local.',
+            '192.168.0',
+            '127.0.0.1',
+            '.localdev',
+            '.test',
+            '.docksal'
+        ];
+
+        foreach ( $localPatterns as $pattern ) {
+            if ( strpos( $url, $pattern ) || strpos( $url, $pattern ) === 0 ) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Check if URL is a stage domain or not
