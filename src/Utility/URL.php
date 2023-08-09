@@ -59,13 +59,27 @@ class URL
     public static function isStage( $url ): bool {
         $stageTLDs = [
             'staging',
-            'stg.wpengine.com',
-            'dev.wpengine.com',
+            'wpengine.com',
+            'wpmudev.host',
             'myftpupload.com',
             'cloudwaysapps.com',
-            'ngrok.io',
             '-dev.ksysweb.com',
-            '-stg.ksysweb.com'
+            '-stg.ksysweb.com',
+            'amazonaws.com',
+            'azure.com',
+            'azurewebsites.net',
+            'dev.cc',
+            'elementor.cloud',
+            'flywheelsites.com',
+            'flywheelstaging.com',
+            'kinsta.cloud',
+            'kinsta.com',
+            '-develop.',
+            '-development.',
+            '-local.',
+            'stage.',
+            'sample.',
+            'debug.'
         ];
 
         foreach ( $stageTLDs as $stageTLD ) {
@@ -77,7 +91,12 @@ class URL
         $patterns = [
             '/stage-([^.]*)\.([^.]*)\.([^.]*)/',
             '/dev-([^.]*)\.([^.]*)\.([^.]*)/',
-            '/test-([^.]*)\.([^.]*)\.([^.]*)/'
+            '/test-([^.]*)\.([^.]*)\.([^.]*)/',
+            '/dev\d+([a-zA-Z0-9]*)\.([^.]*)\.([^.]*)/',
+            '/demo\d+\.([^.]*)\.([^.]*)/',
+            '/demos\d+\.([^.]*)\.([^.]*)/',
+            '/stage\d+\.([^.]*)\.([^.]*)/',
+            '/staging\d+\.([^.]*)\.([^.]*)/',
         ];
 
         foreach ( $patterns as $pattern ) {
