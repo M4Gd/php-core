@@ -146,4 +146,25 @@ class Str
 	    return $text;
     }
 
+    /**
+     * Removes a string from end of a text
+     *
+     * @param string $text
+     * @param string $stringToTrim
+     *
+     * @return string
+     */
+    function rightTrim( $text, $stringToTrim ) {
+        $lengthToTrim = strlen( $stringToTrim );
+        $originalText = $text;
+
+        $text = trim( $text );
+
+        if( substr( $text, -$lengthToTrim ) == $stringToTrim ) {
+            return substr( $text, 0, -$lengthToTrim );
+        }
+
+        return $originalText;
+    }
+
 }
