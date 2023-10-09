@@ -147,10 +147,10 @@ class Str
     }
 
     /**
-     * Removes a string from end of a text
+     * Removes a string from the end of a text
      *
-     * @param string $text
-     * @param string $stringToTrim
+     * @param string $text          the original text
+     * @param string $stringToTrim  the string that should be removed from end of original text
      *
      * @return string
      */
@@ -165,6 +165,22 @@ class Str
         }
 
         return $originalText;
+    }
+
+    /**
+     * Removes a string from the start of a text
+     *
+     * @param string $text          the original text
+     * @param string $stringToTrim  the string that should be removed from start of original text
+     *
+     * @return string
+     */
+    function leftTrim( $text, $stringToTrim ) {
+        if ( strpos( $text, $stringToTrim ) === 0) {
+            return substr( $text, strlen( $stringToTrim ) );
+        }
+
+        return $text;
     }
 
 }
