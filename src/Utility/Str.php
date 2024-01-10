@@ -154,7 +154,7 @@ class Str
      *
      * @return string
      */
-    function rightTrim( $text, $stringToTrim ) {
+    public static function rightTrim( $text, $stringToTrim ) {
         $lengthToTrim = strlen( $stringToTrim );
         $originalText = $text;
 
@@ -175,7 +175,7 @@ class Str
      *
      * @return string
      */
-    function leftTrim( $text, $stringToTrim ) {
+    public static function leftTrim( $text, $stringToTrim ) {
         if ( strpos( $text, $stringToTrim ) === 0) {
             return substr( $text, strlen( $stringToTrim ) );
         }
@@ -191,7 +191,7 @@ class Str
      *
      * @return bool
      */
-    public function ends( $haystack, $needle ){
+    public static function ends( $haystack, $needle ){
         $len = strlen( $needle );
         if ( $len == 0 ) {
             return true;
@@ -207,7 +207,7 @@ class Str
      *
      * @return bool
      */
-    public function starts( $haystack, $needle ){
+    public static function starts( $haystack, $needle ){
         return 0 === strpos( $haystack, $needle );
     }
 
