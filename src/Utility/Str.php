@@ -183,4 +183,32 @@ class Str
         return $text;
     }
 
+    /**
+     * Check if string ends with another string
+     *
+     * @param $haystack
+     * @param $needle
+     *
+     * @return bool
+     */
+    public function ends( $haystack, $needle ){
+        $len = strlen( $needle );
+        if ( $len == 0 ) {
+            return true;
+        }
+        return substr( $haystack, -$len ) === $needle;
+    }
+
+    /**
+     * Check if string starts with another string
+     *
+     * @param $haystack
+     * @param $needle
+     *
+     * @return bool
+     */
+    public function starts( $haystack, $needle ){
+        return 0 === strpos( $haystack, $needle );
+    }
+
 }
