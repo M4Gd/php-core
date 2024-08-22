@@ -117,4 +117,20 @@ class Arr
 		return null;
 	}
 
+    /**
+     * Ensures the value in $args[ $key ] is array
+     *
+     * @param array  $args
+     * @param string $key        The key of array to be checked
+     * @param string $separator  Separator in text-separated string
+     * @return void
+     */
+    public static function ensureItemIsArray( &$args, $key, $separator = ',' ){
+        if ( isset( $args[$key] ) ) {
+            if ( !is_array( $args[$key] ) ) {
+                $args[$key] = Str::toArray( $args[$key], $separator );
+            }
+        }
+    }
+
 }
