@@ -224,7 +224,11 @@ class Str
         } elseif ( is_array( $value ) ) {
             return $value;
         } elseif ( is_string( $value ) ) {
-            return array_map('trim', explode( $separator, $value ) );
+            $value = array_map('trim', explode( $separator, $value ) );
+            // remove empty items as well
+            return array_filter( $value, function( $item ) {
+                return !empty( $item );
+            });
         } else {
             return [];
         }
