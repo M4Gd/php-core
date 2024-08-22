@@ -211,4 +211,23 @@ class Str
         return 0 === strpos( $haystack, $needle );
     }
 
+    /**
+     * Converts comma-separated string, empty, or null values to array
+     *
+     * @param mixed   $value      Variable to be converted
+     * @param string  $separator  Separator in text-separated string
+     * @return array
+     */
+    public static function toArray( $value, $separator = ',' ){
+        if ( is_null( $value ) || $value === '') {
+            return [];
+        } elseif ( is_array( $value ) ) {
+            return $value;
+        } elseif ( is_string( $value ) ) {
+            return array_map('trim', explode( $separator, $value ) );
+        } else {
+            return [];
+        }
+    }
+
 }
