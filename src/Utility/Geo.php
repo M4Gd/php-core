@@ -2,13 +2,11 @@
 
 namespace Averta\Core\Utility;
 
-use Depicter\GuzzleHttp\Exception\GuzzleException;
-
 class Geo
 {
     /**
      * Retrieves original IP of a request
-     * 
+     *
      * @return string
      */
     public static function getOriginalIp() {
