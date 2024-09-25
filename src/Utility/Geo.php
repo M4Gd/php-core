@@ -9,13 +9,15 @@ class Geo
      *
      * @return string
      */
-    public static function getOriginalIp() {
+    public static function getOriginalIp(){
         $headers = [
             'HTTP_CF_CONNECTING_IP', // Cloudflare proxy
             'HTTP_X_FORWARDED_FOR',  // Common forwarded header (can be a comma-separated list)
             'HTTP_X_REAL_IP',        // Nginx direct IP forwarding
-            'HTTP_CLIENT_IP',        // Fallback client IP header
-            'HTTP_X_CLIENT_IP',      // Fallback client IP header
+            'HTTP_CLIENT_IP',
+            'HTTP_X_CLIENT_IP',
+            'HTTP_TRUE_CLIENT_IP',   // Fallback client IP header
+            'HTTP_FASTLY_CLIENT_IP',
             'HTTP_X_CLUSTER_CLIENT_IP',
             'HTTP_FORWARDED_FOR',
             'HTTP_FORWARDED',        // May contain more structured IP forwarding information
@@ -37,7 +39,7 @@ class Geo
             }
         }
 
-        return '0.0.0.0'; //  if no valid IP is found
+        return '0.0.0.0'; // if no valid IP is found
     }
 
 }
